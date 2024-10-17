@@ -58,7 +58,21 @@ class UserController extends Controller
       }
     }
 
-    // User Recover
-    
+    // OTP Send
+    function SendOTPCode(Request $request){
+      $email=$request->input('email');
+      $otp= rand(1000,9999);
+      $count = User::where('email', '=',$email)->count();
+      
+      if($count==1){
+        // OTP Email Address
+        // User Login -> JWT Token Issue
+      }else{
+        return response()->json([
+          'status'=> 'unauthorized',
+        ]);
+      }
+    }
+      
     
 }
