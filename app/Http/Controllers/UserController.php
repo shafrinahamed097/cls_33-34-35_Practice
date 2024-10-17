@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Helper\JWTToken;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\OTPMail;
+use Exception;  
+use Illuminate\Support\Facades\Mail;
+
 
 class UserController extends Controller
 {
@@ -66,7 +70,12 @@ class UserController extends Controller
       
       if($count==1){
         // OTP Email Address
-        // User Login -> JWT Token Issue
+        Mail::to($email)->send(new OTPMail($otp));
+
+
+        //OTP Code Table Update
+        User::where('email', '=',$email)->update(['otp' => $otp]);
+
       }else{
         return response()->json([
           'status'=> 'unauthorized',
