@@ -71,16 +71,47 @@ class UserController extends Controller
       if($count==1){
         // OTP Email Address
         Mail::to($email)->send(new OTPMail($otp));
+        
 
 
         //OTP Code Table Update
         User::where('email', '=',$email)->update(['otp' => $otp]);
+        return response()->json([
+          'status'=> 'success',
+          'message' => '4 Digits OTP Send Successfully',
+        ]);
 
       }else{
         return response()->json([
           'status'=> 'unauthorized',
         ]);
       }
+    }
+
+    // Verify OTP
+    function VerifyOTP(Request $request){
+      $email=$request->input('email');
+      $otp=$request->input('otp');
+      $count = User::where('email', '=',$email)->where('otp','=',$otp)->count();
+      if($count==1){
+        // Database Update
+        User::where('email', '=',$email)->update(['otp' => '0']);
+
+        // Pass Reset Token Issue
+        $token=JWTToken::CreateTokenForSetPassword($request->input('email'));
+        return response()->json([
+          'status'=> 'success',
+          'message' => 'OTP Verify Successfully',
+          'token' => $token,
+        ]);
+
+
+      }else{
+        return response()->json([
+          'status'=> 'unauthorized',
+        ]);
+      }
+
     }
       
     
