@@ -23,7 +23,7 @@ class TokenVerificationMiddleware
             'status'=> 'failed',
             'message'=> 'Unauthorized ',
 
-        ]);
+        ], 401);
 
        }else{
         $request->headers->set('email',$request);
