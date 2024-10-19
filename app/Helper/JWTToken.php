@@ -4,6 +4,8 @@ namespace App\Helper;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+use Exception;
+
 class JWTToken{
    public static function CreateToken($userEmail):string{
         $key=env('JWT_KEY');
@@ -31,14 +33,14 @@ class JWTToken{
         
     }
 
-  public static  function VerifyToken($token):string{
+  public static function VerifyToken($token):string{
         try{
             $key=env('JWT_KEY');
         $decoded=JWT::decode($token, new Key($key, 'HS256'));
         return $decoded->userEmail;
 
         }
-        catch(\Exception ){
+        catch(Exception $e){
             return 'unauthorized';
         }
     }

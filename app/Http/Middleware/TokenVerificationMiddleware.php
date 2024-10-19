@@ -21,12 +21,12 @@ class TokenVerificationMiddleware
        if($result=="unauthorized"){
         return response()->json([
             'status'=> 'failed',
-            'message'=> 'Unauthorized ',
+            'message'=> 'unauthorized ',
 
         ], 401);
 
        }else{
-        $request->headers->set('email',$request);
+        $request->headers->set('email',$result);
 
         return $next($request);
        

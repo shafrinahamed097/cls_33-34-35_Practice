@@ -30,7 +30,7 @@ class UserController extends Controller
         'message' => 'User Registered Successfully',
       ],200);
       }
-      catch(\Exception $e){
+      catch(Exception $e){
         return response()->json([
           'status'=> 'error',
           'message' => 'User Registration Failed',
@@ -116,22 +116,23 @@ class UserController extends Controller
 
     // Password Reset
     function ResetPassword(Request $request){
-     try{ $email=$request->headers('email');
-      $password=$request->input('password');
-      User::where('email', '=',$email)->update(['password' => $password]);
-      return response()->json([
-        'status'=> 'success',
-        'message' => 'Password Reset Successfully',
-      ],200);
-    }
-    catch(Exception $e){
-      return response()->json([
-        'status'=> 'error',
-        'message' => 'Password Reset Failed',
-      ],500);
-    }
-  
+      try{
+          $email=$request->header('email');
+          $password=$request->input('password');
+          User::where('email','=',$email)->update(['password'=>$password]);
+          return response()->json([
+              'status' => 'success',
+              'message' => 'Request Successful',
+          ],200);
+
+      }catch (Exception $exception){
+          return response()->json([
+              'status' => 'fail',
+              'message' => 'Something Went Wrong',
+          ],200);
+      }
   }
+
       
     
 }
