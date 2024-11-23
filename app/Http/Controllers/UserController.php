@@ -8,10 +8,44 @@ use Illuminate\Http\Request;
 use App\Mail\OTPMail;
 use Exception;  
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 
 class UserController extends Controller
 {
+
+
+  function LoginPage():View{
+    return view('pages.auth.login-page');
+  }
+
+  function RegisterPage():View{
+    return view('pages.auth.registration-page');
+  }
+
+  function SendOtpPage():View{
+    return view('pages.auth.send-otp-page');
+  }
+
+  function VerifyOtpPage():View{
+    return view('pages.auth.verify-otp-page');
+  }
+
+  function ResetPasswordPage():View{
+    return view('pages.auth.reset-password-page');
+  }
+
+  function ProfilePage():View{
+    return view('pages.auth.profile-page');
+  }
+
+
+
+
+
+
+
+
 
     // User Registration
     function UserRegistration(Request $request)
